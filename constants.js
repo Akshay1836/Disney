@@ -1,1 +1,1 @@
-export const YOUR_API_KEY_HERE='2ec0d66f5bdf1dd12eefa0723f1479cf'
+export const YOUR_API_KEY_HERE=import.meta.env.VITE_API_KEY;
