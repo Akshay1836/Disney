@@ -12,6 +12,7 @@ function Slider() {
 
 const movieBaseUrl = "https://api.themoviedb.org/3";
 const api_key = YOUR_API_KEY_HERE;
+console.log(api_key);
   const getTrendingVideos = axios.get(
     movieBaseUrl + "/trending/all/day?api_key=" + api_key
   );

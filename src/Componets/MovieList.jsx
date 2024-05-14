@@ -12,8 +12,8 @@ function MovieList({ genreId, index_ }) {
   }, []);
   const api_key = YOUR_API_KEY_HERE;
   const movieByGenreBaseURL = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}`;
-  const GetMovieByGenreId = (id) =>
-    axios.get(movieByGenreBaseURL + "&with_genres=" + id);
+  const GetMovieByGenreId =async(id) =>
+    await axios.get(movieByGenreBaseURL + "&with_genres=" + id);
   const getMovieByGenreId = () => {
     GetMovieByGenreId(genreId).then((resp) => {
       // console.log(resp.data.results)

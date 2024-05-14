@@ -22,8 +22,8 @@ function Banner() {
   useEffect(() => {
     getTrendingMovies();
   }, []);
-  const getTrendingMovies = () => {
-    getTrendingVideos.then((resp) => {
+  const getTrendingMovies = async() => {
+    await getTrendingVideos.then((resp) => {
       console.log(resp.data.results);
       var a = Math.floor(Math.random() * 10) + 1;
 
