@@ -1,2 +1,3 @@
 /node_modules
 /src/Services/GlobalApi.jsx
+.env
