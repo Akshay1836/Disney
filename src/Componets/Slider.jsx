@@ -1,26 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
 import GlobalApi from "../Services/GlobalApi";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-
+import { YOUR_API_KEY_HERE } from "../../constants";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 const screenWidth = window.innerWidth;
 
 function Slider() {
   const [movieList, setMovieList] = useState([]);
   const elementRef = useRef();
+  
 
+const movieBaseUrl = "https://api.themoviedb.org/3";
+const api_key = YOUR_API_KEY_HERE;
+  const getTrendingVideos = axios.get(
+    movieBaseUrl + "/trending/all/day?api_key=" + api_key
+  );
   useEffect(() => {
     getTrendingMovies();
   }, []);
 
   const getTrendingMovies = () => {
-    GlobalApi.getTrendingVideos().then((resp) => {
-      console.log(resp.data.results);
-      setMovieList(resp.data.results);
-    }).catch(error => {
-      console.error("Error fetching trending movies:", error);
-    });
+    getTrendingVideos()
+      .then((resp) => {
+        console.log(resp.data.results);
+        setMovieList(resp.data.results);
+      })
+      
+      .catch((error) => {
+        console.error("Error fetching trending movies:", error);
+      });
   };
+  
 
   const sliderRight = () => {
     elementRef.current.scrollLeft += screenWidth - 1100;
