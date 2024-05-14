@@ -1,52 +1,67 @@
-import React, { useEffect, useRef, useState } from 'react'
-import GlobalApi from '../Services/GlobalApi'
-import MovieCard from './MovieCard';
-import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
-import HrMovieCard from './HrMovieCard';
-function MovieList({genreId,index_}) {
-    const [movieList,setMovieList]=useState([])
-    const elementRef=useRef(null);
-    useEffect(()=>{
-        getMovieByGenreId();
-    },[])
+import React, { useEffect, useRef, useState } from "react";
+import { YOUR_API_KEY_HERE } from "../../constants";
+import MovieCard from "./MovieCard";
+import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import HrMovieCard from "./HrMovieCard";
+import axios from "axios";
+function MovieList({ genreId, index_ }) {
+  const [movieList, setMovieList] = useState([]);
+  const elementRef = useRef(null);
+  useEffect(() => {
+    getMovieByGenreId();
+  }, []);
+  const api_key = YOUR_API_KEY_HERE;
+  const movieByGenreBaseURL = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}`;
+  const GetMovieByGenreId = (id) =>
+    axios.get(movieByGenreBaseURL + "&with_genres=" + id);
+  const getMovieByGenreId = () => {
+    GetMovieByGenreId(genreId).then((resp) => {
+      // console.log(resp.data.results)
+      setMovieList(resp.data.results);
+      console.log(resp.data.results[0]);
+    });
+  };
 
-    const getMovieByGenreId=()=>{
-        GlobalApi.getMovieByGenreId(genreId).then(resp=>{
-            // console.log(resp.data.results)
-            setMovieList(resp.data.results)
-            console.log(resp.data.results[0]);
-        })
-    }
-
-    const slideRight=(element)=>{
-        element.scrollLeft+=500;
-    }
-    const slideLeft=(element)=>{
-        element.scrollLeft-=500;
-    }
+  const slideRight = (element) => {
+    element.scrollLeft += 500;
+  };
+  const slideLeft = (element) => {
+    element.scrollLeft -= 500;
+  };
   return (
-    <div className='relative'>
-         <IoChevronBackOutline onClick={()=>slideLeft(elementRef.current)} 
-         className={`text-[50px] text-white
+    <div className="relative">
+      <IoChevronBackOutline
+        onClick={() => slideLeft(elementRef.current)}
+        className={`text-[50px] text-white
            p-2 z-10 cursor-pointer 
             hidden md:block absolute
-            ${index_%3==0?'mt-[80px]':'mt-[150px]'} `}/>
-   
-    <div ref={elementRef} className='flex overflow-x-auto gap-8
-     scrollbar-none scroll-smooth pt-4 px-3 pb-4'>
-        {movieList.map((item,index)=>(
-           <>
-          {index_%3==0?<HrMovieCard movie={item}/>:<MovieCard movie={item} />}
-           </> 
+            ${index_ % 3 == 0 ? "mt-[80px]" : "mt-[150px]"} `}
+      />
+
+      <div
+        ref={elementRef}
+        className="flex overflow-x-auto gap-8
+     scrollbar-none scroll-smooth pt-4 px-3 pb-4"
+      >
+        {movieList.map((item, index) => (
+          <>
+            {index_ % 3 == 0 ? (
+              <HrMovieCard movie={item} />
+            ) : (
+              <MovieCard movie={item} />
+            )}
+          </>
         ))}
-    </div>
-    <IoChevronForwardOutline onClick={()=>slideRight(elementRef.current)}
-           className={`text-[50px] text-white hidden md:block
+      </div>
+      <IoChevronForwardOutline
+        onClick={() => slideRight(elementRef.current)}
+        className={`text-[50px] text-white hidden md:block
            p-2 cursor-pointer z-10 top-0
             absolute right-0 
-            ${index_%3==0?'mt-[80px]':'mt-[150px]'}`}/> 
+            ${index_ % 3 == 0 ? "mt-[80px]" : "mt-[150px]"}`}
+      />
     </div>
-  )
+  );
 }
 
-export default MovieList
+export default MovieList;
