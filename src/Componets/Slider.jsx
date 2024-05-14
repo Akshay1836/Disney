@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { YOUR_API_KEY_HERE } from "../../constants";
+import axios from "axios";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 const screenWidth = window.innerWidth;
 
@@ -14,6 +15,7 @@ const api_key = YOUR_API_KEY_HERE;
   const getTrendingVideos = axios.get(
     movieBaseUrl + "/trending/all/day?api_key=" + api_key
   );
+
   useEffect(() => {
     getTrendingMovies();
   }, []);
